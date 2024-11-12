@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "660584190481",
+    "project_id": "stiptor-app",
+    "storage_bucket": "stiptor-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660584190481:android:93d09816ec1b2e983497b0",
+        "android_client_info": {
+          "package_name": "com.exa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4xHUrVoXdX40SeNpMu0TtdSePX0dSvx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660584190481:android:2d025fedb0bb91783497b0",
+        "android_client_info": {
+          "package_name": "com.example.stipator_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4xHUrVoXdX40SeNpMu0TtdSePX0dSvx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

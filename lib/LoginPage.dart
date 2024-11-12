@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'home_page.dart'; // Import HomePage here
 
 class LoginPage extends StatelessWidget {
@@ -23,11 +24,8 @@ class LoginPage extends StatelessWidget {
               Column (
                 children:<Widget> [
                  const SizedBox(height :60.0),
-                 // Display logo image (Ensure you have an image in assets)
                  Image.asset('assets/1.png', height :100,width :100), 
                  const SizedBox(height :20), 
-
-                 // Gradient Text for STIPATOR
                  ShaderMask (
                    shaderCallback :(bounds )=> LinearGradient (
                    colors:[ Colors.purple ,Colors.blueAccent ], begin :Alignment.topLeft ,end :
@@ -38,8 +36,6 @@ class LoginPage extends StatelessWidget {
                    FontWeight.bold,color :
                    Colors.white ))), 
                  const SizedBox(height:10),
-
-                 // Tagline with Gradient Effect
                  ShaderMask (
                    shaderCallback :(bounds )=> LinearGradient (
                    colors:[ Colors.orangeAccent ,Colors.yellow ], begin :
@@ -53,7 +49,6 @@ class LoginPage extends StatelessWidget {
 
              Column(children:<Widget> [
                const SizedBox(height:20), 
-
                const Text("Log in",style :
                TextStyle(fontSize:30,fontWeight :FontWeight.bold,color :Colors.white )),
                const SizedBox(height:20), 
@@ -95,7 +90,7 @@ class LoginPage extends StatelessWidget {
               // Sign In Button
               ElevatedButton(
                 onPressed: () {
-                  _navigateToHome(context); // Navigate with transition
+                  _signIn(context, emailController.text, passwordController.text); // Sign in logic
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 15),
@@ -110,6 +105,24 @@ class LoginPage extends StatelessWidget {
        )
      )
    );
+ }
+
+ // Sign-in with Firebase Authentication
+ Future<void> _signIn(BuildContext context, String email, String password) async {
+   try {
+     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+       email: email,
+       password: password,
+     );
+     // Navigate to HomePage after successful login
+     _navigateToHome(context);
+   } on FirebaseAuthException catch (e) {
+     if (e.code == 'user-not-found') {
+       _showErrorDialog(context, "No user found for that email.");
+     } else if (e.code == 'wrong-password') {
+       _showErrorDialog(context, "Wrong password provided.");
+     }
+   }
  }
 
  // Custom navigation function with transition
@@ -129,6 +142,23 @@ class LoginPage extends StatelessWidget {
            child: child,
          );
        },
+     ),
+   );
+ }
+
+ // Show error dialog
+ void _showErrorDialog(BuildContext context, String message) {
+   showDialog(
+     context: context,
+     builder: (context) => AlertDialog(
+       title: Text("Error"),
+       content: Text(message),
+       actions: [
+         ElevatedButton(
+           onPressed: () => Navigator.pop(context),
+           child: Text("OK"),
+         ),
+       ],
      ),
    );
  }

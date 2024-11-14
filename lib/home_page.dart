@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart'; // Import Flutter Animate for animations
+import 'package:flutter_animate/flutter_animate.dart'; // For animations
+import 'package:firebase_auth/firebase_auth.dart'; // Firebase Auth to get user info
+import 'package:google_fonts/google_fonts.dart'; // For custom fonts
 import 'alert_screen.dart';
 import 'alerts_page.dart';
 import 'awareness_page.dart';
@@ -12,29 +14,35 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the current user from FirebaseAuth
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       drawer: AppDrawer(), // Sidebar Drawer
       appBar: AppBar(
         title: Text(
           'Home',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // Default font
+          style: GoogleFonts.righteous(fontSize: 24, fontWeight: FontWeight.bold), // Custom font for AppBar
         ),
         backgroundColor: Colors.deepPurple, // Custom color for AppBar
         actions: [
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             onPressed: () {
-              Navigator.push(
-                context,
-                _createRoute(ProfilePage(
-                  name: 'John Doe',
-                  email: 'john.doe@example.com',
-                  phone: '123-456-7890',
-                  dob: '01/01/2000',
-                  gender: 'Male',
-                  imageUrl: 'assets/images/profile_image.jpg', // Correctly referenced image
-                )),
-              );
+              // Navigate to Profile Page with user details
+              if (user != null) {
+                Navigator.push(
+                  context,
+                  _createRoute(ProfilePage(
+                    name: user.displayName ?? 'No Name', // Display name or fallback
+                    email: user.email ?? 'No Email',
+                    phone: user.phoneNumber ?? 'No Phone',
+                    dob: 'Unknown', // Placeholder for DOB, you can fetch this from Firestore if needed
+                    gender: 'Unknown', // Placeholder for gender
+                    imageUrl: user.photoURL ?? 'assets/images/profile_image.jpg', // Placeholder image or user's photo URL
+                  )),
+                );
+              }
             },
           ),
         ],
@@ -42,7 +50,7 @@ class HomePage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.blueAccent],
+            colors: [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)], // Dark gradient background
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -50,29 +58,31 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Welcome Text with Animation
+            // Welcome Text with Animation and Custom Font
             Text(
               'Welcome Back!',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+              style: GoogleFonts.lobster(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
             ).animate().fadeIn(duration: 800.ms).slideY(begin: -0.5),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            // Profile Section with Image and Name
+            // Profile Section with Image and Name (Fetched from Firebase)
             CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/images/profile_image.png'),
+              backgroundImage:
+                  NetworkImage(user?.photoURL ?? 'assets/images/profile_image.png'), // Use user's photo or placeholder
             ).animate().scale(duration: 700.ms),
-            SizedBox(height: 10),
-            Text('John Doe', style: TextStyle(fontSize: 20, color: Colors.white)),
+            const SizedBox(height: 10),
+            Text(user?.displayName ?? "No Name", style: GoogleFonts.lato(fontSize: 20, color: Colors.white)),
+            Text(user?.email ?? "No Email", style: GoogleFonts.lato(fontSize: 16, color: Colors.white70)),
 
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
 
             // Action Cards (Alerts, Rewards, etc.)
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 children:<Widget> [
@@ -87,10 +97,10 @@ class HomePage extends StatelessWidget {
             // Floating SOS Button with Animation
             FloatingActionButton.extended(
               onPressed: () {
-                Navigator.push(context, _createRoute(AlertScreen()));
+                Navigator.push(context, _createRoute(const AlertScreen()));
               },
-              label: Text('SOS', style: TextStyle(fontSize: 18)),
-              icon: Icon(Icons.warning),
+              label: const Text('SOS', style: TextStyle(fontSize: 18)),
+              icon: const Icon(Icons.warning),
               backgroundColor: Colors.redAccent,
             ).animate().fadeIn(duration :500.ms).scale(),
           ],
@@ -118,19 +128,19 @@ class HomePage extends StatelessWidget {
   Widget _buildActionCard(BuildContext context, IconData iconData, String title, Color color) {
     return GestureDetector(
       onTap :() {
-        Navigator.push(context ,_createRoute(AlertScreen())); // Navigate to respective pages
+        Navigator.push(context ,_createRoute(const AlertScreen())); // Navigate to respective pages
       },
       child :Container (
         decoration :BoxDecoration (
           color :color.withOpacity(0.8), 
           borderRadius :BorderRadius.circular(16), 
-          boxShadow :[BoxShadow(color :Colors.black26 ,blurRadius :8)]), 
+          boxShadow :[const BoxShadow(color :Colors.black26 ,blurRadius :8)]), 
         child :Column (
           mainAxisAlignment :MainAxisAlignment.center ,children:<Widget> [
           Icon(iconData ,size :50,color :Colors.white ), 
-          SizedBox(height :10), 
+          const SizedBox(height :10), 
           Text(title ,style :
-          TextStyle(fontSize :18,fontWeight :FontWeight.bold,color :
+          GoogleFonts.raleway(fontSize :18,fontWeight :FontWeight.bold,color :
           Colors.white ))]))).animate().fadeIn(duration :700.ms);
   }
 }
@@ -145,16 +155,16 @@ class AppDrawer extends StatelessWidget {
         padding :EdgeInsets.zero ,
         children:<Widget> [
           DrawerHeader (
-            decoration :BoxDecoration(color :Colors.deepPurple ), 
+            decoration :const BoxDecoration(color :Colors.deepPurple ), 
             child :Text('Navigation',style :
-              TextStyle(fontSize :24,color :Colors.white)), 
+              GoogleFonts.righteous(fontSize :24,color :Colors.white)), 
           ).animate().fadeIn(duration :800.ms), 
 
-          _buildDrawerItem(context ,Icons.home ,"Home" ,HomePage()),
-          _buildDrawerItem(context ,Icons.notification_important ,"Alerts" ,AlertsPage()),
-          _buildDrawerItem(context ,Icons.card_giftcard ,"Rewards" ,RewardsPage()),
-          _buildDrawerItem(context ,Icons.volunteer_activism ,"Awareness" ,AwarenessPage()),
-          _buildDrawerItem(context ,Icons.feedback ,"Feedback" ,FeedbackPage()),
+          _buildDrawerItem(context ,Icons.home ,"Home" ,const HomePage()),
+          _buildDrawerItem(context ,Icons.notification_important ,"Alerts" , AlertsPage()),
+          _buildDrawerItem(context ,Icons.card_giftcard ,"Rewards" , RewardsPage()),
+          _buildDrawerItem(context ,Icons.volunteer_activism ,"Awareness" , AwarenessPage()),
+          _buildDrawerItem(context ,Icons.feedback ,"Feedback" ,const FeedbackPage()),
         ],
       ),
     );
@@ -164,7 +174,7 @@ class AppDrawer extends StatelessWidget {
     return ListTile (
       leading :Icon(iconData ,color :Colors.deepPurpleAccent ), 
       title :Text(title ,style :
-      TextStyle(fontSize :18)), 
+      GoogleFonts.lato(fontSize :18)), 
       onTap :( ) {
         Navigator.pop(context);
         Navigator.pushReplacement(context ,_createRoute(page));

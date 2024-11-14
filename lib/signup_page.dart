@@ -65,7 +65,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                 children:<Widget> [
                   // Logo at the top (Infinity Logo)
                   const SizedBox(height: 50),
-                  Image.asset('assets/stipator_logo-rg.png', height :120,width :120), 
+                  Image.asset('assets/stipator_logo_rg.png', height :120,width :120), 
                   const SizedBox(height :20), 
 
                   // App Name (Styled with custom font)

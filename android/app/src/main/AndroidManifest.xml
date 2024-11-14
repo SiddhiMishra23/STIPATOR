@@ -2,7 +2,7 @@
     <application
         android:label="Stipator"
         android:name="${applicationName}"
-        android:icon="@mipmap/stipator_logo">
+        android:icon="@mipmap/stipator_logo_rg">
         <activity
             android:name=".MainActivity"
             android:exported="true"

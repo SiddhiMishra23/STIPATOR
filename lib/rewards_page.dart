@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'app_drawer.dart'; // Ensure this import is correct
 
 class RewardsPage extends StatelessWidget {
   // Dummy list of rewards based on activity
@@ -31,35 +31,35 @@ class RewardsPage extends StatelessWidget {
     },
   ];
 
- RewardsPage({super.key});
+   RewardsPage({super.key}); // Marking as const
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(), // Use const since AppDrawer is stateless
       appBar: AppBar(
-        title: Text('Rewards'),
+        title: const Text('Rewards'),
         actions: [
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             onPressed: () {
               // Profile button action
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Profile button pressed')),
+                const SnackBar(content: Text('Profile button pressed')),
               );
             },
           ),
         ],
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         itemCount: rewards.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: Card(
               child: ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.star,
                   color: Colors.amber,
                   size: 40,
@@ -69,7 +69,7 @@ class RewardsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Date: ${rewards[index]['date']}'),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(rewards[index]['description'] ?? ''),
                   ],
                 ),

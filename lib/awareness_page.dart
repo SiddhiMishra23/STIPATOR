@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'app_drawer.dart'; // Ensure this import is correct
 
 class AwarenessPage extends StatelessWidget {
   // List of awareness programs with details
@@ -30,27 +30,27 @@ class AwarenessPage extends StatelessWidget {
     },
   ];
 
- AwarenessPage({super.key});
+   AwarenessPage({super.key}); // Marking the constructor as const
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(), // Use const since AppDrawer is stateless
       appBar: AppBar(
-        title: Text('Awareness'),
+        title: const Text('Awareness'),
         actions: [
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Profile button pressed')),
+                const SnackBar(content: Text('Profile button pressed')),
               );
             },
           ),
         ],
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         itemCount: awarenessPrograms.length,
         itemBuilder: (context, index) {
           return Padding(
@@ -70,9 +70,9 @@ class AwarenessPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Time: ${awarenessPrograms[index]['eventTime']}'),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Text(awarenessPrograms[index]['description'] ?? ''),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Text('Reward: ${awarenessPrograms[index]['score']}'),
                           ],
                         ),
@@ -84,7 +84,7 @@ class AwarenessPage extends StatelessWidget {
                                 SnackBar(content: Text('Applied for ${awarenessPrograms[index]['eventName']}')),
                               );
                             },
-                            child: Text('Apply'),
+                            child: const Text('Apply'),
                           ),
                         ],
                       );

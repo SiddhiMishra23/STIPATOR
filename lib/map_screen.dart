@@ -4,7 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class OpenStreetMapExample extends StatefulWidget {
-  final Positioned locationName; // Accept a string argument
+  final String? locationName; // Accept a string argument
   // final Position pos
 
   OpenStreetMapExample({required this.locationName}); // Constructor to accept the string argument

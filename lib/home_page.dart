@@ -7,7 +7,7 @@ import 'LoginPage.dart';
 import 'app_drawer.dart';
 import 'alert_screen.dart';
 import 'alerts_page.dart';
-import 'awareness_page.dart';
+import 'awareness_page.dart';//12
 import 'feedback_page.dart';
 import 'rewards_page.dart';
 import 'map_screen.dart'; // Import your MapScreen here

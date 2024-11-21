@@ -87,6 +87,11 @@ dev_dependencies:
 flutter:
   assets:
     - assets/stipator_logo_rg.png
+    - assets/1.png
+    - assets/2.png
+    - assets/3.png
+    - assets/4.png
+    - assets/5.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

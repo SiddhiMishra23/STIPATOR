@@ -155,7 +155,6 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SingleChildScrollView(
-        // Wrapped the body in a scrollable widget to avoid overflow
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -170,16 +169,24 @@ class _HomePageState extends State<HomePage> {
                 .fadeIn(duration: const Duration(milliseconds: 800))
                 .slideY(begin: -0.5),
             const SizedBox(height: 20),
-            Customcarouel(), // Your custom carousel widget
-            const SizedBox(height: 10),
+            Customcarouel(),
             if (_currentPosition != null)
               Text(
                 "Location:\nLAT ${_currentPosition!.latitude}, LNG ${_currentPosition!.longitude}",
-                style: GoogleFonts.lato(fontSize: 16, color: Colors.white70),
+                style: GoogleFonts.lato(fontSize: 16, color: Colors.black),
               ),
-            if (_currentAddress != null)
-              Text("Address:\n$_currentAddress",
-                  style: GoogleFonts.lato(fontSize: 16, color: Colors.white70)),
+            if (_currentAddress != null ||
+                _currentAddress == null ||
+                _currentAddress!.isNotEmpty)
+              Text(
+                "Address:\nKanpur, Bhautipratappur",
+                style: GoogleFonts.lato(fontSize: 16, color: Colors.black),
+              ),
+            if (user != null)
+              Text(
+                "Email:\n${user!.email}",
+                style: GoogleFonts.lato(fontSize: 16, color: Colors.black),
+              ),
             const SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: () {
@@ -210,8 +217,30 @@ class _HomePageState extends State<HomePage> {
               crossAxisSpacing: 1,
               mainAxisSpacing: 16,
               children: <Widget>[
-                _buildActionCard(context, Icons.notification_important,
-                    "Alerts", Colors.redAccent),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AlertsPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.redAccent,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important, size: 30),
+                      SizedBox(height: 5),
+                      Text("Alerts"),
+                    ],
+                  ),
+                ),
                 _buildActionCard(context, Icons.card_giftcard, "Rewards",
                     Colors.orangeAccent),
                 _buildActionCard(context, Icons.volunteer_activism, "Aware",
@@ -273,6 +302,13 @@ class _HomePageState extends State<HomePage> {
 
         return SlideTransition(position: offsetAnimation, child: child);
       },
+    );
+  }
+
+  void _performLogout(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => AlertScreen()),
     );
   }
 }

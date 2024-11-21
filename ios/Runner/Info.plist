@@ -29,7 +29,17 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-<string>This app requires access to your location to show nearby police stations.</string>
+    <string>We need your location to send emergency help.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need your location to send emergency help.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>We need access to contacts for emergency purposes.</string>
+	<string>We need your location to send an emergency alert.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Access to contacts is needed to send emergency alerts.</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app requires access to your location to show nearby police stations.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

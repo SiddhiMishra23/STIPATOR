@@ -175,11 +175,11 @@ class _HomePageState extends State<HomePage> {
             if (_currentPosition != null)
               Text(
                 "Location:\nLAT ${_currentPosition!.latitude}, LNG ${_currentPosition!.longitude}",
-                style: GoogleFonts.lato(fontSize: 16, color: Colors.white70),
+                style: GoogleFonts.lato(fontSize: 16, color: const Color.fromARGB(179, 27, 25, 25)),
               ),
             if (_currentAddress != null)
               Text("Address:\n$_currentAddress",
-                  style: GoogleFonts.lato(fontSize: 16, color: Colors.white70)),
+                  style: GoogleFonts.lato(fontSize: 16, color: const Color.fromARGB(179, 9, 9, 9))),
             const SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: () {

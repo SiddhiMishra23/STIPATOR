@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
           style:
               GoogleFonts.righteous(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.redAccent,
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
               style: GoogleFonts.lobster(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                  color: const Color.fromARGB(255, 0, 0, 0)),
             )
                 .animate()
                 .fadeIn(duration: const Duration(milliseconds: 800))
@@ -197,24 +197,24 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.map),
               label: const Text("Show My Location"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 241, 241, 244),
+                backgroundColor: const Color.fromARGB(255, 228, 228, 228),
               ),
             ),
             const SizedBox(height: 20),
             GridView.count(
-              crossAxisCount: 2,
+              crossAxisCount: 4,
               shrinkWrap: true,
               physics:
                   const NeverScrollableScrollPhysics(), // Avoid scroll conflict with SingleChildScrollView
-              padding: const EdgeInsets.all(16),
-              crossAxisSpacing: 16,
+              padding: const EdgeInsets.all(6),
+              crossAxisSpacing: 1,
               mainAxisSpacing: 16,
               children: <Widget>[
                 _buildActionCard(context, Icons.notification_important,
                     "Alerts", Colors.redAccent),
                 _buildActionCard(context, Icons.card_giftcard, "Rewards",
                     Colors.orangeAccent),
-                _buildActionCard(context, Icons.volunteer_activism, "Awareness",
+                _buildActionCard(context, Icons.volunteer_activism, "Aware",
                     Colors.greenAccent),
                 _buildActionCard(
                     context, Icons.feedback, "Feedback", Colors.blueAccent),

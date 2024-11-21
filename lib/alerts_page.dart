@@ -36,12 +36,13 @@ class AlertsPage extends StatelessWidget {
     },
   ];
 
- AlertsPage({super.key});
+  AlertsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer( // Example AppDrawer if needed
+      drawer: Drawer(
+        // Example AppDrawer if needed
         child: ListView(
           children: [
             DrawerHeader(
@@ -70,12 +71,13 @@ class AlertsPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ProfilePage(
-                    name: 'John Doe',          // Sample data
+                    name: 'John Doe', // Sample data
                     email: 'johndoe@email.com', // Replace with actual user data
-                    phone: '123-456-7890',      // Replace with actual user data
-                    dob: '01-01-1990',          // Replace with actual user data
-                    gender: 'Male',             // Replace with actual user data
-                    imageUrl: 'https://via.placeholder.com/150', // User's profile image URL
+                    phone: '123-456-7890', // Replace with actual user data
+                    dob: '01-01-1990', // Replace with actual user data
+                    gender: 'Male', // Replace with actual user data
+                    imageUrl:
+                        'https://via.placeholder.com/150', // User's profile image URL
                   ),
                 ),
               );
@@ -92,9 +94,7 @@ class AlertsPage extends StatelessWidget {
             child: Card(
               child: ListTile(
                 leading: Icon(
-                  alerts[index]['status']
-                      ? Icons.check_circle
-                      : Icons.error,
+                  alerts[index]['status'] ? Icons.check_circle : Icons.error,
                   color: alerts[index]['status'] ? Colors.green : Colors.red,
                   size: 40,
                 ),

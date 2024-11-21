@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart'; // For animations
-import 'package:firebase_auth/firebase_auth.dart'; // Firebase Auth to get user info
-import 'package:google_fonts/google_fonts.dart'; // For custom fonts
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'profile_page.dart';
 import 'LoginPage.dart';
 import 'app_drawer.dart';
 import 'alert_screen.dart';
-import 'sos.dart'; // Import your SOS screen here
+import 'sos.dart';
 import 'alerts_page.dart';
 import 'awareness_page.dart';
 import 'feedback_page.dart';
 import 'rewards_page.dart';
-import 'map_screen.dart'; // Import your MapScreen here
-import 'package:geolocator/geolocator.dart'; // For geolocation services
-import 'package:geocoding/geocoding.dart'; // For reverse geocoding (address from coordinates)
-import 'customcarouel.dart'; // Assuming this is your custom image slider
-import 'settings.dart'; // Import your settings page
+import 'map_screen.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+import 'customcarouel.dart';
+import 'settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation(); // Fetch location when the page loads
+    _getCurrentLocation();
   }
 
   Future<void> _getCurrentLocation() async {
@@ -42,7 +42,9 @@ class _HomePageState extends State<HomePage> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Location services are disabled. Please enable them in settings.')),
+        const SnackBar(
+            content: Text(
+                'Location services are disabled. Please enable them in settings.')),
       );
       return;
     }
@@ -60,7 +62,8 @@ class _HomePageState extends State<HomePage> {
 
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Location permissions are permanently denied')),
+        const SnackBar(
+            content: Text('Location permissions are permanently denied')),
       );
       return;
     }
@@ -71,7 +74,7 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       _currentPosition = position;
-      _getAddressFromLatLng(); // Fetch address from coordinates
+      _getAddressFromLatLng();
     });
   }
 
@@ -85,7 +88,8 @@ class _HomePageState extends State<HomePage> {
         Placemark place = placemarks[0];
 
         setState(() {
-          _currentAddress = "${place.locality}, ${place.postalCode}, ${place.country}";
+          _currentAddress =
+              "${place.locality}, ${place.postalCode}, ${place.country}";
         });
       }
     } catch (e) {
@@ -100,7 +104,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(
           'Home',
-          style: GoogleFonts.righteous(fontSize: 24, fontWeight: FontWeight.bold),
+          style:
+              GoogleFonts.righteous(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.deepPurple,
         actions: [
@@ -117,7 +122,8 @@ class _HomePageState extends State<HomePage> {
                       phone: user?.phoneNumber ?? "No Phone",
                       dob: 'Unknown',
                       gender: 'Unknown',
-                      imageUrl: user?.photoURL ?? "assets/images/profile_image.jpg",
+                      imageUrl:
+                          user?.photoURL ?? "assets/images/profile_image.jpg",
                     ),
                   ),
                 );
@@ -133,7 +139,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                _createRoute(const SosScreen()), // Navigate to SOS screen
+                _createRoute(const SosScreen()),
               );
             },
           ),
@@ -142,56 +148,39 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                _createRoute(const SettingsPage()), // Navigate to Settings Page
+                _createRoute(const SettingsPage()),
               );
             },
           ),
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+      body: SingleChildScrollView(
+        // Wrapped the body in a scrollable widget to avoid overflow
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               'Welcome Back!',
-              style: GoogleFonts.lobster(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
-            ).animate().fadeIn(duration: const Duration(milliseconds: 800)).slideY(begin: -0.5),
+              style: GoogleFonts.lobster(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            )
+                .animate()
+                .fadeIn(duration: const Duration(milliseconds: 800))
+                .slideY(begin: -0.5),
             const SizedBox(height: 20),
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(user?.photoURL ?? "assets/images/profile_image.png"),
-            ).animate().scale(duration: const Duration(milliseconds: 700)),
-            const SizedBox(height: 10),
-            Text(user?.displayName ?? "No Name", style: GoogleFonts.lato(fontSize: 20, color: Colors.white)),
-            Text(user?.email ?? "No Email", style: GoogleFonts.lato(fontSize: 16, color: Colors.white70)),
+            Customcarouel(), // Your custom carousel widget
             const SizedBox(height: 10),
             if (_currentPosition != null)
-              Text("Location:\nLAT ${_currentPosition!.latitude}, LNG ${_currentPosition!.longitude}",
-                  style: GoogleFonts.lato(fontSize: 16, color: Colors.white70)),
-            if (_currentAddress != null)
-              Text("Address:\n$_currentAddress", style: GoogleFonts.lato(fontSize: 16, color: Colors.white70)),
-            const SizedBox(height: 40),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(16),
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                children: <Widget>[
-                  _buildActionCard(context, Icons.notification_important, "Alerts", Colors.redAccent),
-                  _buildActionCard(context, Icons.card_giftcard, "Rewards", Colors.orangeAccent),
-                  _buildActionCard(context, Icons.volunteer_activism, "Awareness", Colors.greenAccent),
-                  _buildActionCard(context, Icons.feedback, "Feedback", Colors.blueAccent),
-                ],
+              Text(
+                "Location:\nLAT ${_currentPosition!.latitude}, LNG ${_currentPosition!.longitude}",
+                style: GoogleFonts.lato(fontSize: 16, color: Colors.white70),
               ),
-            ),
+            if (_currentAddress != null)
+              Text("Address:\n$_currentAddress",
+                  style: GoogleFonts.lato(fontSize: 16, color: Colors.white70)),
+            const SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: () {
                 Navigator.push(
@@ -210,6 +199,26 @@ class _HomePageState extends State<HomePage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 241, 241, 244),
               ),
+            ),
+            const SizedBox(height: 20),
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics:
+                  const NeverScrollableScrollPhysics(), // Avoid scroll conflict with SingleChildScrollView
+              padding: const EdgeInsets.all(16),
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              children: <Widget>[
+                _buildActionCard(context, Icons.notification_important,
+                    "Alerts", Colors.redAccent),
+                _buildActionCard(context, Icons.card_giftcard, "Rewards",
+                    Colors.orangeAccent),
+                _buildActionCard(context, Icons.volunteer_activism, "Awareness",
+                    Colors.greenAccent),
+                _buildActionCard(
+                    context, Icons.feedback, "Feedback", Colors.blueAccent),
+              ],
             ),
           ],
         ),

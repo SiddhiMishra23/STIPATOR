@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stipator_app/loginPage.dart';
+import 'package:stipator_app/signup_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -66,11 +68,21 @@ class SettingsPage extends StatelessWidget {
             leading: const Icon(Icons.logout),
             title: const Text("Logout"),
             onTap: () {
-              // Perform Logout
+              // Perform Logout (Clear session, tokens, etc.)
+              _performLogout(context);
             },
-          ),
+          )
         ],
       ),
+    );
+  }
+
+  void _performLogout(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              const LoginPage()), // Replace LoginPage with your actual login widget
     );
   }
 }

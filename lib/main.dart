@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Auth App',
+      title: 'Flutter',
       home: SignupPage(), // Show the SignupPage first
     );
   }

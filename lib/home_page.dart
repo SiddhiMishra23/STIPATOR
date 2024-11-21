@@ -155,7 +155,6 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SingleChildScrollView(
-        // Wrapped the body in a scrollable widget to avoid overflow
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -170,8 +169,7 @@ class _HomePageState extends State<HomePage> {
                 .fadeIn(duration: const Duration(milliseconds: 800))
                 .slideY(begin: -0.5),
             const SizedBox(height: 20),
-            Customcarouel(), // Your custom carousel widget
-            const SizedBox(height: 10),
+            Customcarouel(),
             if (_currentPosition != null)
               Text(
                 "Location:\nLAT ${_currentPosition!.latitude}, LNG ${_currentPosition!.longitude}",
@@ -210,14 +208,108 @@ class _HomePageState extends State<HomePage> {
               crossAxisSpacing: 1,
               mainAxisSpacing: 16,
               children: <Widget>[
-                _buildActionCard(context, Icons.notification_important,
-                    "Alerts", Colors.redAccent),
-                _buildActionCard(context, Icons.card_giftcard, "Rewards",
-                    Colors.orangeAccent),
-                _buildActionCard(context, Icons.volunteer_activism, "Aware",
-                    Colors.greenAccent),
-                _buildActionCard(
-                    context, Icons.feedback, "Feedback", Colors.blueAccent),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AlertsPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.redAccent,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important, size: 30),
+                      SizedBox(height: 5),
+                      Text("Alerts"),
+                    ],
+                  ),
+                ), //Elevated button end for alerts
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RewardsPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 5, 255, 25),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.wallet_giftcard, size: 30),
+                      SizedBox(height: 5),
+                      Text("Reward"),
+                    ],
+                  ),
+                ), //reward button ended
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AwarenessPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 31, 6, 215),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.wallet_giftcard, size: 30),
+                      SizedBox(height: 5),
+                      Text("Aware"),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FeedbackPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 20, 58, 18),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.wallet_giftcard, size: 30),
+                      SizedBox(height: 5),
+                      Text("Feedback"),
+                    ],
+                  ),
+                ),
+                //_buildActionCard(context, Icons.card_giftcard, "Rewards",
+                //  Colors.orangeAccent),
+                //_buildActionCard(context, Icons.volunteer_activism, "Aware",
+                //    Colors.greenAccent),
+                //_buildActionCard(
+                //  context, Icons.feedback, "Feedback", Colors.blueAccent),
               ],
             ),
           ],
@@ -273,6 +365,13 @@ class _HomePageState extends State<HomePage> {
 
         return SlideTransition(position: offsetAnimation, child: child);
       },
+    );
+  }
+
+  void _performLogout(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => AlertScreen()),
     );
   }
 }

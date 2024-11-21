@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.redAccent,
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   child: Column(
@@ -240,13 +240,85 @@ class _HomePageState extends State<HomePage> {
                       Text("Alerts"),
                     ],
                   ),
+                ), //Elevated button end for alerts
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RewardsPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 5, 255, 25),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.wallet_giftcard, size: 30),
+                      SizedBox(height: 5),
+                      Text("Reward"),
+                    ],
+                  ),
+                ), //reward button ended
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AwarenessPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 31, 6, 215),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.wallet_giftcard, size: 30),
+                      SizedBox(height: 5),
+                      Text("Aware"),
+                    ],
+                  ),
                 ),
-                _buildActionCard(context, Icons.card_giftcard, "Rewards",
-                    Colors.orangeAccent),
-                _buildActionCard(context, Icons.volunteer_activism, "Aware",
-                    Colors.greenAccent),
-                _buildActionCard(
-                    context, Icons.feedback, "Feedback", Colors.blueAccent),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FeedbackPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 20, 58, 18),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.wallet_giftcard, size: 30),
+                      SizedBox(height: 5),
+                      Text("Feedback"),
+                    ],
+                  ),
+                ),
+                //_buildActionCard(context, Icons.card_giftcard, "Rewards",
+                //  Colors.orangeAccent),
+                //_buildActionCard(context, Icons.volunteer_activism, "Aware",
+                //    Colors.greenAccent),
+                //_buildActionCard(
+                //  context, Icons.feedback, "Feedback", Colors.blueAccent),
               ],
             ),
           ],
